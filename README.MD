@@ -1,6 +1,6 @@
-MAZE ESCAPE OPENGL
+# MAZE ESCAPE OPENGL
 
-Código criada na Disciplina de Computação Gráfica.
+## Código criada na Disciplina de Computação Gráfica.
 
 UNIPAMPA Campus Alegrete
 
