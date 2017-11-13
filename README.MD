@@ -1,7 +1,7 @@
 ﻿# ![Maze Escape](https://github.com/homdreen/Maze-Escape-OpenGL/blob/master/Logo.png)
 
 
-## Sumário
+# Sumário
 * [Introdução](#introducao)<br>
 * [Membros](#team-members)<br>
 * [Como Compilar](#compilacao)<br>
