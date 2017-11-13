@@ -1,4 +1,4 @@
-﻿![Maze Escape](https://github.com/homdreen/Maze-Escape-OpenGL/blob/master/logo.png)
+﻿![Maze Escape](https://github.com/homdreen/Maze-Escape-OpenGL/blob/master/Logo.png)
 
 ## Código criada na Disciplina de Computação Gráfica.
 
