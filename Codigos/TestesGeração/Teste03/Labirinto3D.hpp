@@ -6,6 +6,12 @@
 
 using namespace std;
 
+struct Ponto{
+    int x;
+    int y;
+    int z;
+};
+
 class Labirinto3D{
 public:
     Labirinto3D(int n, int m);
@@ -16,11 +22,14 @@ public:
     void ExibeMatriz();
     void Conversor3D();
     void Status();
+    void DefinePontos();
 private:
-    int **matriz;
+    Ponto *Vertices;
+    int **Matriz;
     int Altura;
     int Largura;
     int Dim;
+    int Pontos;
 };
 
 Labirinto3D::Labirinto3D(int n, int m){
@@ -28,19 +37,20 @@ Labirinto3D::Labirinto3D(int n, int m){
 
     Lab = new Labirinto(n, m);
 
-    this->matriz = (int**)malloc(Lab->GetN()*sizeof(int*));
+    this->Matriz = (int**)malloc(Lab->GetN()*sizeof(int*));
 
     for(int i = 0; i < Lab->GetM(); i++){
-        this->matriz[i] = (int*)malloc(Lab->GetM()*sizeof(int));
+        this->Matriz[i] = (int*)malloc(Lab->GetM()*sizeof(int));
     }
 
-    Lab->GetLabirinto(this->matriz);
+    Lab->GetLabirinto(this->Matriz);
     SetAltura(Lab->GetN());
     SetLargura(Lab->GetM());
 
     Dim = 5;
 
     ExibeMatriz();
+    DefinePontos();
     Conversor3D();
 }
 
@@ -50,19 +60,20 @@ Labirinto3D::Labirinto3D(){
 
     Lab = new Labirinto(n, m);
 
-    this->matriz = (int**)malloc(Lab->GetN()*sizeof(int*));
+    this->Matriz = (int**)malloc(Lab->GetN()*sizeof(int*));
 
     for(int i = 0; i < Lab->GetM(); i++){
-        this->matriz[i] = (int*)malloc(Lab->GetM()*sizeof(int));
+        this->Matriz[i] = (int*)malloc(Lab->GetM()*sizeof(int));
     }
 
-    Lab->GetLabirinto(this->matriz);
+    Lab->GetLabirinto(this->Matriz);
     SetAltura(Lab->GetN());
     SetLargura(Lab->GetM());
 
     Dim = 5;
 
-    ExibeMatriz();
+    //ExibeMatriz();
+    DefinePontos();
     Conversor3D();
 }
 
@@ -79,7 +90,7 @@ void Labirinto3D::ExibeMatriz(){
 
     for(int i = 0; i < this->Altura; i++){
         for(int j = 0; j < this->Largura; j++){
-            if(this->matriz[i][j] == 0) cout << "[]";
+            if(this->Matriz[i][j] == 0) cout << "[]";
             else cout << "  ";
         }
         cout << endl;
@@ -105,7 +116,7 @@ void Labirinto3D::Status(){
             }
             else{
                 if(j < Largura-1){
-                    if(matriz[i][j+1] == 1){
+                    if(Matriz[i][j+1] == 1){
                         cout << "[" << i << "]" << "[" << j << "] Direita Aberta " << endl;
                         cont++;
                     }
@@ -115,7 +126,7 @@ void Labirinto3D::Status(){
                     }
                 }
                 else if(j < Largura){
-                    if(matriz[i][j] == 1){
+                    if(Matriz[i][j] == 1){
                         cout << "[" << i << "]" << "[" << j << "] Esquerda Aberta " << endl;
                         cont++;
                     }
@@ -125,7 +136,7 @@ void Labirinto3D::Status(){
                     }
                 }
                 if(i < Altura-1){
-                    if(matriz[i+1][j] == 1){
+                    if(Matriz[i+1][j] == 1){
                         cout << "[" << i << "]" << "[" << j << "] Inferior Aberto " << endl;
                         cont++;
                     }
@@ -145,6 +156,36 @@ void Labirinto3D::Status(){
     cout << "Maximo de Paredes necessárias: " << cont << endl;
 }
 
+void Labirinto3D::DefinePontos(){
+    int aux = this->Altura*this->Largura;
+
+    this->Pontos = aux+this->Altura+this->Largura+1;
+    this->Pontos *= 2;
+    //cout << this->Pontos;
+
+    Vertices = (Ponto*)malloc(this->Pontos*sizeof(Ponto));
+
+    for(int i = 0; (i < Altura); i++){
+        for(int j = 0; (j < Largura); j++){
+            if(i == 0) aux = j;
+            else aux = ((i*Largura)+j);
+
+            Vertices[aux].x = (i*Dim)+Dim;
+            Vertices[aux].y = (j*Dim)+Dim;
+            Vertices[aux].z = (2*Dim);
+        }
+    }
+
+    for(int i = 0; i < Altura; i++){
+        for(int j = 0; j < Largura; j++){
+            if(i == 0) aux = j;
+            else aux = ((i*Largura)+j);
+
+            cout << "(" << Vertices[aux].x << "," << Vertices[aux].y << "," << Vertices[aux].z << ")" <<  endl;
+        }
+    }
+}
+
 void Labirinto3D::Conversor3D(){
     //Status();
     for(int i = 0; i < this->Altura; i++){
@@ -159,17 +200,17 @@ void Labirinto3D::Conversor3D(){
             }
             else{
                 if(j < Largura-1){
-                    if(matriz[i][j+1] == 0){
+                    if(Matriz[i][j+1] == 0){
                         //cout << "[" << i << "]" << "[" << j << "] Direita Direita Fechada " << endl;
                     }
                 }
                 else if(j < Largura){
-                    if(matriz[i][j] == 0){
+                    if(Matriz[i][j] == 0){
                         //cout << "[" << i << "]" << "[" << j << "] Esquerda Fechada " << endl;
                     }
                 }
                 if(i < Altura-1){
-                    if(matriz[i+1][j] == 0){
+                    if(Matriz[i+1][j] == 0){
                         //cout << "[" << i << "]" << "[" << j << "] Inferior Fechado " << endl;
                     }
                 }
