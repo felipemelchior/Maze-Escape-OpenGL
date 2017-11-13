@@ -1,4 +1,4 @@
-# MAZE ESCAPE OPENGL
+﻿![Maze Escape](https://github.com/homdreen/Maze-Escape-OpenGL/blob/master/logo.png)
 
 ## Código criada na Disciplina de Computação Gráfica.
 
