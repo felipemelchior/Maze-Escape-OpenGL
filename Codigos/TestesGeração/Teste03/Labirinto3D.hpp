@@ -165,25 +165,32 @@ void Labirinto3D::DefinePontos(){
 
     Vertices = (Ponto*)malloc(this->Pontos*sizeof(Ponto));
 
-    for(int i = 0; (i < Altura); i++){
-        for(int j = 0; (j < Largura); j++){
-            if(i == 0) aux = j;
-            else aux = ((i*Largura)+j);
+    int V1[this->Pontos/2], V2[this->Pontos/2];
+    aux = 0;
 
-            Vertices[aux].x = (i*Dim)+Dim;
-            Vertices[aux].y = (j*Dim)+Dim;
-            Vertices[aux].z = (2*Dim);
+    for(int i = 0; i < this->Altura + 1; i++){
+        for(int j = 0; j < this->Largura + 1; j++){
+            //cout << i*Dim << " " << j*Dim << endl;
+            V1[aux] = i*Dim;
+            V2[aux] = j*Dim;
+            aux++;
         }
     }
 
-    for(int i = 0; i < Altura; i++){
-        for(int j = 0; j < Largura; j++){
-            if(i == 0) aux = j;
-            else aux = ((i*Largura)+j);
+    for(int i = 0; i < aux; i++){
+        //cout << V1[i] << " " << V2[i] << endl;
+        Vertices[i].x = V1[i];
+        Vertices[i].z = V2[i];
+        Vertices[i].y = Dim*2;
 
-            cout << "(" << Vertices[aux].x << "," << Vertices[aux].y << "," << Vertices[aux].z << ")" <<  endl;
-        }
+        Vertices[i+(this->Pontos/2)].x = V1[i];
+        Vertices[i+(this->Pontos/2)].z = V2[i];
+        Vertices[i+(this->Pontos/2)].y = 0;
     }
+
+    //for(int i = 0; i < Pontos; i++)
+        //cout << Vertices[i].x << " " << Vertices[i].z << " " << Vertices[i].y << endl;
+
 }
 
 void Labirinto3D::Conversor3D(){
