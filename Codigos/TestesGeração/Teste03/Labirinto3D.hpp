@@ -207,13 +207,13 @@ void Labirinto3D::Conversor3D(){
                 //cout << "[" << i << "]" << "[" << j << "] Inferior Fechado " << endl;
                 //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[j+this->Largura+1].x << " " << Vertices[j+this->Largura+1].z << endl;
                 //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[j+this->Largura+2].x << " " << Vertices[j+this->Largura+2].z << endl;
-                cout << "f " << j+this->Largura+1 << " " << j+this->Largura+2 << " " << j+this->Largura+1+aux << " " << j+this->Largura+2+aux << endl;
+                cout << "f " << j+this->Largura+1 << " " << j+this->Largura+2 << " " << j+this->Largura+2+aux << " " << j+this->Largura+1+aux << endl;
             }
             else if(j == 0){
                 //cout << "[" << i << "]" << "[" << j << "] Direita Fechada " << endl;
                 //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[i*(this->Largura+1)].x << " " << Vertices[i*(this->Largura+1)].z << endl;
                 //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+(this->Largura+1)].x << " " << Vertices[(i*(this->Largura+1))+(this->Largura+1)].z << endl;
-                cout << "f " <<  i*(this->Largura+1) << " " << (i*(this->Largura+1))+(this->Largura+1) << " " <<  (i*(this->Largura+1))+aux << " " << ((i*(this->Largura+1))+(this->Largura+1))+aux << endl;
+                cout << "f " <<  i*(this->Largura+1) << " " << (i*(this->Largura+1))+(this->Largura+1) << " " << ((i*(this->Largura+1))+(this->Largura+1))+aux << " " <<  (i*(this->Largura+1))+aux <<  endl;
             }
             else{
                 if(j < Largura-1){
@@ -221,7 +221,7 @@ void Labirinto3D::Conversor3D(){
                         //cout << "[" << i << "]" << "[" << j << "] Direita Fechada " << endl;
                         //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+j+1].x << " " << Vertices[(i*(this->Largura+1))+j+1].z << endl;
                         //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+j+(this->Largura+1)+1].x << " " << Vertices[(i*(this->Largura+1))+j+(this->Largura+1)+1].z << endl;
-                        cout << "f " << (i*(this->Largura+1))+j+1 << " " << (i*(this->Largura+1))+j+(this->Largura+1)+1 << " " << (i*(this->Largura+1))+j+1+aux << " " << (i*(this->Largura+1))+j+(this->Largura+1)+1+aux << endl;
+                        cout << "f " << (i*(this->Largura+1))+j+1 << " " << (i*(this->Largura+1))+j+(this->Largura+1)+1 << " " << (i*(this->Largura+1))+j+(this->Largura+1)+1+aux << " " <<  (i*(this->Largura+1))+j+1+aux << endl;
                     }
                 }
                 else if(j < Largura){
@@ -237,14 +237,14 @@ void Labirinto3D::Conversor3D(){
                         //cout << "[" << i << "]" << "[" << j << "] Inferior Fechado " << endl;
                         //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+j+this->Largura+1].x << " " << Vertices[(i*(this->Largura+1))+j+this->Largura+1].z << endl;
                         //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+j+this->Largura+2].x << " " << Vertices[(i*(this->Largura+1))+j+this->Largura+2].z << endl;
-                        cout << "f " << (i*(this->Largura+1))+j+this->Largura+1 << " " << (i*(this->Largura+1))+j+this->Largura+2 << " " << (i*(this->Largura+1))+j+this->Largura+1+aux << " " << (i*(this->Largura+1))+j+this->Largura+2+aux << endl;
+                        cout << "f " << (i*(this->Largura+1))+j+this->Largura+1 << " " << (i*(this->Largura+1))+j+this->Largura+2 << " " << (i*(this->Largura+1))+j+this->Largura+2+aux << " " << (i*(this->Largura+1))+j+this->Largura+1+aux << endl;
                     }
                 }
                 else{
                     //cout << "[" << i << "]" << "[" << j << "] Inferior Fechado " << endl;
                     //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+j+this->Largura+1].x << " " << Vertices[(i*(this->Largura+1))+j+this->Largura+1].z << endl;
                     //cout << "[" << i << "]" << "[" << j << "] => " << Vertices[(i*(this->Largura+1))+j+this->Largura+2].x << " " << Vertices[(i*(this->Largura+1))+j+this->Largura+2].z << endl;
-                    cout << "f " << (i*(this->Largura+1))+j+this->Largura+1 << " " << (i*(this->Largura+1))+j+this->Largura+2 << " " << (i*(this->Largura+1))+j+this->Largura+1+aux << " " << (i*(this->Largura+1))+j+this->Largura+2+aux << endl;
+                    cout << "f " << (i*(this->Largura+1))+j+this->Largura+1 << " " << (i*(this->Largura+1))+j+this->Largura+2 << " " << (i*(this->Largura+1))+j+this->Largura+2+aux << " " << (i*(this->Largura+1))+j+this->Largura+1+aux << endl;
                 }
             }
         }
