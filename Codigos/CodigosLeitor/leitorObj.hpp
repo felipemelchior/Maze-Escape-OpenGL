@@ -2,8 +2,12 @@
 #define LEITOROBJ_H
 
 #include <iostream>
+#include <cstdlib>
+#include <string>
 #include <fstream>
 #include <vector>
+#include <string>
+#include <climits>
 
 #include "Vertice.hpp"
 #include "Face.hpp"
@@ -14,7 +18,8 @@ class Leitor{
 	public:
 		Leitor();
 		~Leitor();
-		void readObj(string Nome);
+		void readObj();
+		void imprimeObj();
 	private:
 		vector <Vertices> vertices;
 		vector <Faces> faces;
@@ -26,10 +31,12 @@ Leitor::Leitor(){
 Leitor::~Leitor(){
 }
 
-void Leitor::readObj(string Nome){
-	ifstream iFile.open(Nome.c_str());
+void Leitor::readObj(){
+	ifstream iFile;
+	iFile.open("../TestesGeração/Teste03/Labirinto.obj");
 	float PontoX, PontoY, PontoZ;
-	int aux, letra;
+	int aux;
+	string letra;
 	vector <int> aux2;
 
 	if(!iFile.is_open()){
@@ -63,6 +70,21 @@ void Leitor::readObj(string Nome){
 	}
 
 	iFile.close();
+}
+
+void Leitor::imprimeObj(){
+	for(int i = 0; i < vertices.size(); i++){
+		cout << "v " << vertices[i].getX() << " " << vertices[i].getY() << " " << vertices[i].getZ() << endl;
+	}
+
+	for(int i = 0; i < faces.size(); i++){
+		cout << "f "; 
+		for(int j = 0; j < faces[i].getTamElemento(); j++){
+			cout << faces[i].getElemento(j) << " "; 
+		}
+		cout << endl;
+	}
+
 }
 
 #endif 

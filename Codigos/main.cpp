@@ -11,14 +11,20 @@
 
 #include <iostream>
 
-#include "menu.hpp"
+//#include "menu.hpp"
+#include "CodigosLeitor/leitorObj.hpp"
+//#include "TestesGeração/Teste03/Labirinto.obj"
 
 using namespace std;
 
 int main(int argc, char **argv){
-	Menu *menu = new Menu();
+	//Menu *menu = new Menu();
+	Leitor *leitor = new Leitor();
 
-	menu->exibeMenu();
+	leitor->readObj();
+	leitor->imprimeObj();
+
+	//menu->exibeMenu();
 
 	return 0;
 }
