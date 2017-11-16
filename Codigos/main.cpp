@@ -21,7 +21,8 @@ int main(int argc, char **argv){
 	//Menu *menu = new Menu();
 	Leitor *leitor = new Leitor();
 
-	leitor->readObj();
+	//leitor->testeArquivo();
+	leitor->readObj("Labirinto.obj");
 	leitor->imprimeObj();
 
 	//menu->exibeMenu();

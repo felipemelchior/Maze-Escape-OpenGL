@@ -18,7 +18,8 @@ class Leitor{
 	public:
 		Leitor();
 		~Leitor();
-		void readObj();
+		void testeArquivo();
+		void readObj(string Nome);
 		void imprimeObj();
 	private:
 		vector <Vertices> vertices;
@@ -31,9 +32,21 @@ Leitor::Leitor(){
 Leitor::~Leitor(){
 }
 
-void Leitor::readObj(){
+void Leitor::testeArquivo(){
 	ifstream iFile;
-	iFile.open("../TestesGeração/Teste03/Labirinto.obj");
+	iFile.open("Labirinto.obj");
+
+	if(iFile.is_open()){
+		cout << "Arquivo aberto com sucesso";
+	}else{
+		cout << "Falha ao abrir o arquivo";
+		exit(1);
+	}
+}
+
+void Leitor::readObj(string Nome){
+	ifstream iFile;
+	iFile.open(Nome.c_str());
 	float PontoX, PontoY, PontoZ;
 	int aux;
 	string letra;
