@@ -55,7 +55,7 @@ Labirinto3D::Labirinto3D(int n, int m){
 }
 
 Labirinto3D::Labirinto3D(){
-    int n = 10, m = 10;
+    int n = 20, m = 20;
     Labirinto *Lab;
 
     Lab = new Labirinto(n, m);
@@ -177,6 +177,7 @@ void Labirinto3D::DefinePontos(){
         }
     }
 
+    //cout << aux << endl;
     for(int i = 0; i < aux; i++){
         //cout << V1[i] << " " << V2[i] << endl;
         Vertices[i].x = V1[i];
@@ -198,17 +199,15 @@ void Labirinto3D::Conversor3D(){
     for(int i = 0; i < this->Altura; i++){
         for(int j = 0; j < this->Largura; j++){
             if(i == 0){
-                //cout << "[" << i << "]" << "[" << j << "] Direita Fechada " << endl;
                 //cout << "[" << i << "]" << "[" << j << "] Inferior Fechado " << endl;
             }
             else if(j == 0){
                 //cout << "[" << i << "]" << "[" << j << "] Direita Fechada " << endl;
-                //cout << "[" << i << "]" << "[" << j << "] Inferior Fechado " << endl;
             }
             else{
                 if(j < Largura-1){
                     if(Matriz[i][j+1] == 0){
-                        //cout << "[" << i << "]" << "[" << j << "] Direita Direita Fechada " << endl;
+                        //cout << "[" << i << "]" << "[" << j << "] Direita Fechada " << endl;
                     }
                 }
                 else if(j < Largura){
