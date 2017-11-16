@@ -1,3 +1,14 @@
+# Blender v2.71 (sub 0) OBJ File: 'kodama.blend'
+# www.blender.org
+mtllib kodama.mtl
+o Plane
+v -1.000000 4.954279 7.793588
+v 1.000000 4.954279 7.793588
+v -1.000000 10.182163 2.186485
+v 1.000000 10.182163 2.186485
+usemtl Material
+s off
+f 1 2 4 3
 o kodama_Cube.001
 v 0.141965 1.261809 0.259321
 v 0.074117 1.261970 0.273971
