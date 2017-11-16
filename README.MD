@@ -20,5 +20,9 @@ Este código faz parte da disciplina de Computação Gráfica, ministrada por Ma
 # <a name="compilacao"></a>Compilação<br>
 Para Compilar o programa use: <br>
 	```
-	$ g++ -o -lGL -lGLU -lglut main.cpp jogo
+	$ make
+	```
+<br> Após isso use: <br>
+	```
+	$ ./jogo
 	```
