@@ -12,20 +12,12 @@
 #include <iostream>
 
 //#include "menu.hpp"
-#include "CodigosLeitor/leitorObj.hpp"
-//#include "TestesGeração/Teste03/Labirinto.obj"
+#include "GeracaoLabirinto/Labirinto3D.hpp"
 
 using namespace std;
 
 int main(int argc, char **argv){
-	//Menu *menu = new Menu();
-	Leitor *leitor = new Leitor();
-
-	//leitor->testeArquivo();
-	leitor->readObj("Labirinto.obj");
-	leitor->imprimeObj();
-
-	//menu->exibeMenu();
+	Labirinto3D* lab = new Labirinto3D(20,20);
 
 	return 0;
 }

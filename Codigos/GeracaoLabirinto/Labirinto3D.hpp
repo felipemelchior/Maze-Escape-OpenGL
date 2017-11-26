@@ -9,12 +9,6 @@
 
 using namespace std;
 
-struct Ponto{
-    int x;
-    int y;
-    int z;
-};
-
 class Labirinto3D{
 public:
     Labirinto3D(int n, int m);
@@ -198,8 +192,7 @@ void Labirinto3D::DefinePontos(){
 }
 
 void Labirinto3D::Conversor3D(){
-    Leitor leitor;
-    leitor = new Leitor();
+    Leitor* leitor = new Leitor();
     int cont = 0;
     Ponto *VerticesLab;
     int **FacesLab;
@@ -325,7 +318,7 @@ void Labirinto3D::Conversor3D(){
         }
     }
 
-    leitor.readObj(VerticesLab, FacesLab, cont);
+    leitor->readObj(VerticesLab, FacesLab, cont, Pontos);
 
     for(int i = 0; i < this->Pontos; i++){
         oFile << "v " <<  VerticesLab[i].x << " " << VerticesLab[i].y << " " << VerticesLab[i].z << endl;

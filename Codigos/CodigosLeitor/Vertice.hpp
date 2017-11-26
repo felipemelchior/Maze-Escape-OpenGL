@@ -13,9 +13,9 @@ class Vertices{
 		int getY();
 		int getZ();
 	private:
-		float PontoX;
-		float PontoY;
-		float PontoZ;
+		int PontoX;
+		int PontoY;
+		int PontoZ;
 };
 
 Vertices::Vertices(){
