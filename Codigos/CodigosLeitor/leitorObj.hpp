@@ -11,6 +11,7 @@
 
 #include "Vertice.hpp"
 #include "Face.hpp"
+#include "../GeracaoLabirinto/Labirinto3D.hpp"
 
 using namespace std;
 
@@ -18,9 +19,7 @@ class Leitor{
 	public:
 		Leitor();
 		~Leitor();
-		void testeArquivo();
-		void readObj(string Nome);
-		void imprimeObj();
+		void readObj(Ponto* verticesLab, int** facesLab);
 	private:
 		vector <Vertices> vertices;
 		vector <Faces> faces;
@@ -32,72 +31,35 @@ Leitor::Leitor(){
 Leitor::~Leitor(){
 }
 
-void Leitor::testeArquivo(){
-	ifstream iFile;
-	iFile.open("Labirinto.obj");
-
-	if(iFile.is_open()){
-		cout << "Arquivo aberto com sucesso";
-	}else{
-		cout << "Falha ao abrir o arquivo";
-		exit(1);
-	}
-}
-
-void Leitor::readObj(string Nome){
-	ifstream iFile;
-	iFile.open(Nome.c_str());
+void Leitor::readObj(Ponto* verticesLab, int** facesLab, int cont){	
 	float PontoX, PontoY, PontoZ;
 	int aux;
-	string letra;
 	vector <int> aux2;
 
-	if(!iFile.is_open()){
-		cout << "Erro ao abrir o arquivo" << endl;
-		exit(1);
+
+	cout << "Vertices" << endl;
+	for(int i = 0; verticesLab != NULL; i++){
+		PontoX = verticesLab[i].x  
+		PontoY = verticesLab[i].y  
+		PontoZ = verticesLab[i].z  
+		
+		cout << PontoX << " " << PontoY << " " << PontoZ << endl; 
+
+		vertices.push_back(Vertices(PontoX, PontoY, PontoZ));
 	}
 
-	while(!iFile.eof()){
-		iFile >> letra;
-
-		if(letra == "#") iFile.ignore(INT_MAX, '\n');
-
-		else if(letra == "v"){
-			iFile >> PontoX;
-			iFile >> PontoY;
-			iFile >> PontoZ;
-
-			vertices.push_back(Vertices(PontoX, PontoY, PontoZ));
+	cout << "Faces" << endl;
+	for(int i = 0; i < cont; i++){
+		for(int j = 0; j < 4; j++){
+			aux = facesLab[i][j];
+			aux2.push_back(aux)
+			cout << aux << " " ;
 		}
 
-		else if(letra == "f"){
-			for(int i = 0; i < 4; i++){
-				iFile >> aux;
-				aux2.push_back(aux);
-			}
-
-			faces.push_back(Faces(aux2));
-			aux2.clear();
-		}
-		else iFile.ignore(INT_MAX, '\n');
-	}
-
-	iFile.close();
-}
-
-void Leitor::imprimeObj(){
-	for(int i = 0; i < vertices.size(); i++){
-		cout << "v " << vertices[i].getX() << " " << vertices[i].getY() << " " << vertices[i].getZ() << endl;
-	}
-
-	for(int i = 0; i < faces.size(); i++){
-		cout << "f "; 
-		for(int j = 0; j < faces[i].getTamElemento(); j++){
-			cout << faces[i].getElemento(j) << " "; 
-		}
 		cout << endl;
+		faces.push_back(Faces(aux2));
+		aux2.clear();
 	}
-
 }
 
 #endif 
