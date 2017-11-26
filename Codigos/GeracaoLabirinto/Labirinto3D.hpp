@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include "Labirinto.hpp"
+#include "../CodigosLeitor/leitorObj.hpp"
 
 using namespace std;
 
@@ -197,6 +198,8 @@ void Labirinto3D::DefinePontos(){
 }
 
 void Labirinto3D::Conversor3D(){
+    Leitor leitor;
+    leitor = new Leitor();
     int cont = 0;
     Ponto *VerticesLab;
     int **FacesLab;
@@ -321,6 +324,8 @@ void Labirinto3D::Conversor3D(){
             }
         }
     }
+
+    leitor.readObj(VerticesLab, FacesLab, cont);
 
     for(int i = 0; i < this->Pontos; i++){
         oFile << "v " <<  VerticesLab[i].x << " " << VerticesLab[i].y << " " << VerticesLab[i].z << endl;
