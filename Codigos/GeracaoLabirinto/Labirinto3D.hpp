@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include "Labirinto.hpp"
 
 using namespace std;
@@ -196,61 +197,142 @@ void Labirinto3D::DefinePontos(){
 }
 
 void Labirinto3D::Conversor3D(){
+    int cont = 0;
+    Ponto *VerticesLab;
+    int **FacesLab;
+
+    for(int i = 0; i < this->Pontos; i++){
+        VerticesLab = (Ponto*)malloc(this->Pontos*sizeof(Ponto));
+    }
+
+
+    FacesLab = (int**)malloc(((this->Altura*this->Largura)*6)*sizeof(int*));
+    for(int i = 0; i < ((this->Altura*this->Largura)*6); i++){
+        FacesLab[i] = (int*)malloc(4*sizeof(int));
+    }
+
+    //cout << VerticesLab.size() << " " << FacesLab.size() << " " << FacesLab[0].size() << endl;
+
     int aux = this->Pontos/2;
     ofstream oFile;
     oFile.open("Labirinto.obj");
     //Status();
 
-    for(int i = 0; i < Pontos; i++)
+    for(int i = 0; i < Pontos; i++){
         //cout << "v " << Vertices[i].x << " " << Vertices[i].y << " " << Vertices[i].z << endl;
-        oFile << "v " << Vertices[i].x << " " << Vertices[i].y << " " << Vertices[i].z << endl;
+        //oFile << "v " << Vertices[i].x << " " << Vertices[i].y << " " << Vertices[i].z << endl;
+        VerticesLab[i].x = Vertices[i].x;
+        VerticesLab[i].y = Vertices[i].y;
+        VerticesLab[i].z = Vertices[i].z;
+    }
+
     for(int i = 0; i < this->Altura; i++){
         for(int j = 0; j < this->Largura; j++){
             if(Matriz[i][j] == 0){
+                /*
                 oFile << "f "
                 << (i*(this->Largura+1))+j+1 << " "
                 << (i*(this->Largura+1))+j+2 << " "
                 << (i*(this->Largura+1))+j+2+(this->Largura+1) << " "
                 << (i*(this->Largura+1))+j+1+(this->Largura+1) << " "
                 << endl;
+                */
 
+                FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                FacesLab[cont][1] = (i*(this->Largura+1))+j+2;
+                FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                cont++;
+
+                /*
                 oFile << "f "
                 << (i*(this->Largura+1))+j+1 << " "
                 << (i*(this->Largura+1))+j+2 << " "
                 << (i*(this->Largura+1))+j+2+(this->Pontos/2)<< " "
                 << (i*(this->Largura+1))+j+1+(this->Pontos/2)<< " "
                 << endl;
+                */
 
+                FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                FacesLab[cont][1] = (i*(this->Largura+1))+j+2;
+                FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                cont++;
+
+                /*
                 oFile << "f "
                 << (i*(this->Largura+1))+j+2 << " "
                 << (i*(this->Largura+1))+j+2+(this->Largura+1) << " "
                 << (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2) << " "
                 << (i*(this->Largura+1))+j+2+(this->Pontos/2) << " "
                 << endl;
+                */
 
+                FacesLab[cont][0] = (i*(this->Largura+1))+j+2;
+                FacesLab[cont][1] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                cont++;
+
+                /*
                 oFile << "f "
                 << (i*(this->Largura+1))+j+2+(this->Largura+1) << " "
                 << (i*(this->Largura+1))+j+1+(this->Largura+1) << " "
                 << (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2) << " "
                 << (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2) << " "
                 << endl;
+                */
 
+                FacesLab[cont][0] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                cont++;
+
+                /*
                 oFile << "f "
                 << (i*(this->Largura+1))+j+1 << " "
                 << (i*(this->Largura+1))+j+1+(this->Largura+1) << " "
                 << (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2) << " "
                 << (i*(this->Largura+1))+j+1+(this->Pontos/2) << " "
                 << endl;
+                */
 
+                FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                cont++;
+
+                /*
                 oFile << "f "
                 << (i*(this->Largura+1))+j+1+(this->Pontos/2) << " "
                 << (i*(this->Largura+1))+j+2+(this->Pontos/2) << " "
                 << (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2) << " "
                 << (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2) << " "
                 << endl;
+                */
+
+                FacesLab[cont][0] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                FacesLab[cont][1] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                cont++;
             }
         }
     }
+
+    for(int i = 0; i < this->Pontos; i++){
+        oFile << "v " <<  VerticesLab[i].x << " " << VerticesLab[i].y << " " << VerticesLab[i].z << endl;
+    }
+    for(int i = 0; i < cont; i++){
+        oFile << "f ";
+        for(int j = 0; j < 4; j++){
+            oFile << FacesLab[i][j] << " ";
+        }
+        oFile << endl;
+    }
+
     oFile.close();
 }
 #endif
