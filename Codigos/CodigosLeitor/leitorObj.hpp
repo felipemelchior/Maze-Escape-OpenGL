@@ -14,12 +14,17 @@
 
 using namespace std;
 
+struct Ponto{
+	int x;
+	int y;
+	int z;
+};
+
 class Leitor{
 	public:
 		Leitor();
 		~Leitor();
-		void testeArquivo();
-		void readObj(string Nome);
+		void readObj(Ponto* verticesLab, int** facesLab, int cont, int pontos);
 		void imprimeObj();
 	private:
 		vector <Vertices> vertices;
@@ -32,57 +37,30 @@ Leitor::Leitor(){
 Leitor::~Leitor(){
 }
 
-void Leitor::testeArquivo(){
-	ifstream iFile;
-	iFile.open("Labirinto.obj");
-
-	if(iFile.is_open()){
-		cout << "Arquivo aberto com sucesso";
-	}else{
-		cout << "Falha ao abrir o arquivo";
-		exit(1);
-	}
-}
-
-void Leitor::readObj(string Nome){
-	ifstream iFile;
-	iFile.open(Nome.c_str());
+void Leitor::readObj(Ponto* verticesLab, int** facesLab, int cont, int pontos){	
 	float PontoX, PontoY, PontoZ;
 	int aux;
-	string letra;
 	vector <int> aux2;
 
-	if(!iFile.is_open()){
-		cout << "Erro ao abrir o arquivo" << endl;
-		exit(1);
+	for(int i = 0; i < pontos; i++){
+		PontoX = verticesLab[i].x;  
+		PontoY = verticesLab[i].y; 
+		PontoZ = verticesLab[i].z;  
+
+		vertices.push_back(Vertices(PontoX, PontoY, PontoZ));
 	}
 
-	while(!iFile.eof()){
-		iFile >> letra;
-
-		if(letra == "#") iFile.ignore(INT_MAX, '\n');
-
-		else if(letra == "v"){
-			iFile >> PontoX;
-			iFile >> PontoY;
-			iFile >> PontoZ;
-
-			vertices.push_back(Vertices(PontoX, PontoY, PontoZ));
+	for(int i = 0; i < cont; i++){
+		for(int j = 0; j < 4; j++){
+			aux = facesLab[i][j];
+			aux2.push_back(aux);
+			
 		}
+		faces.push_back(Faces(aux2));
 
-		else if(letra == "f"){
-			for(int i = 0; i < 4; i++){
-				iFile >> aux;
-				aux2.push_back(aux);
-			}
-
-			faces.push_back(Faces(aux2));
-			aux2.clear();
-		}
-		else iFile.ignore(INT_MAX, '\n');
+		aux2.clear();
 	}
-
-	iFile.close();
+	//imprimeObj();
 }
 
 void Leitor::imprimeObj(){
@@ -91,13 +69,12 @@ void Leitor::imprimeObj(){
 	}
 
 	for(int i = 0; i < faces.size(); i++){
-		cout << "f "; 
+		cout << "f ";
 		for(int j = 0; j < faces[i].getTamElemento(); j++){
-			cout << faces[i].getElemento(j) << " "; 
+			cout << faces[i].getElemento(j) << " ";
 		}
 		cout << endl;
 	}
-
 }
 
 #endif 
