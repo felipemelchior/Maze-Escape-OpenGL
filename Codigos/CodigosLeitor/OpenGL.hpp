@@ -23,6 +23,7 @@ void init(void){
 }
 
 void DrawCube(void){
+    xRotated = 90.0f;
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
