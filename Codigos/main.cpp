@@ -19,5 +19,18 @@ using namespace std;
 int main(int argc, char **argv){
 	Labirinto3D* lab = new Labirinto3D(20,20);
 
+	glutInit(&argc, argv);
+	//we initizlilze the glut. functions
+	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+	glutInitWindowSize(5000, 5000);
+	glutInitWindowPosition(100, 100);
+	glutCreateWindow(argv[0]);
+	init();
+	glutDisplayFunc(DrawCube);
+	glutReshapeFunc(reshape);
+	//Set the function for the animation.
+	glutIdleFunc(animation);
+	glutMainLoop();
+
 	return 0;
 }
