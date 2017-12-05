@@ -1,8 +1,8 @@
 output:	main.o
-	g++ main.o -o jogo
-
+	g++ main.o -o teste -lGL -lGLU -lglut
+ 
 main.o:	main.cpp
-	g++ -o -lGL -lGLU -lglut main.cpp -c
+	g++ main.cpp -c
 
 clean:
-	rm *.o jogo
+	rm *.o main
