@@ -22,7 +22,7 @@ int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	//we initizlilze the glut. functions
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-	glutInitWindowSize(500, 500);
+	glutInitWindowSize(1366,768);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow(argv[0]);
 	init();
