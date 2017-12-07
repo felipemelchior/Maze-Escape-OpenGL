@@ -18,11 +18,13 @@ using namespace std;
 
 int main(int argc, char **argv){
 	Labirinto3D* lab = new Labirinto3D(20,20);
+	
+	start = omp_get_wtime();
 
 	glutInit(&argc, argv);
 	//we initizlilze the glut. functions
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-	glutInitWindowSize(800,600);
+	glutInitWindowSize(1920,1080);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow(argv[0]);
 	init();
@@ -37,6 +39,6 @@ int main(int argc, char **argv){
 	//Set the function for the animation.
 	//glutIdleFunc(animation);
 	glutMainLoop();
-
+	
 	return 0;
 }

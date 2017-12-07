@@ -1,35 +1,67 @@
+/**
+ * This program show on how to use timer function in OpenGL
+ * 
+ * For more tutorial, see: 
+ * http://60hz.csse.uwa.edu.au/workshop/workshop0/workshop2.html
+ */
+
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-void displayCB(void){
-	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0,1.0,1.0);
-	glBegin(GL_POLYGON);
-	glVertex2i(200,125);
-	glVertex2i(100,375);
-	glVertex2i(300,375);
-	glEnd();
-	glFlush();
+#include <ctime>
+#include <cstdlib>
+
+#include <iostream>
+
+using namespace std;
+
+int angle = 1;
+
+static void Timer(int value){
+    angle += 0.1;
+    glutPostRedisplay();
+    // 100 milliseconds
+    glutTimerFunc(100, Timer, 0);
 }
 
-void keyCB(unsigned char key, int x, int y){
-	if(key == 'q') exit(0);
+
+void init(){
+    glClearColor(1.0,1.0,1.0,1.0);
 }
 
-int main(int argc, char** argv){
-	int win;
+void display(){
+    glClear(GL_COLOR_BUFFER_BIT);
 
-	glutInit(&argc, argv);
+    glRotatef(angle, 0.0, 1.0, 0.0);
+    glRotatef(angle, 0.0, 0.0, 01.0);
 
-	glutInitDisplayMode(GLUT_RGB);
-	glutInitWindowSize(1366,768);
-	win = glutCreateWindow("Triangule");
+    glColor3f(0.9,0.9,0.1);
+    glutSolidTeapot(0.5);
 
-	glClearColor(0.0,0.0,0.0,0.0);
-	gluOrtho2D(0,400,0,500);
-	glutDisplayFunc(displayCB);
-	glutKeyboardFunc(keyCB);
+    glFlush();
 
-	glutMainLoop();
+}
+
+
+int main(int argc, char *argv[]){
+
+
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+    glutInitWindowSize(400,300);
+    glutInitWindowPosition(200,100);
+    glutCreateWindow("Simulation App");
+
+    init();
+    glutDisplayFunc(display);
+
+    Timer(0);
+
+    glutMainLoop();
+
+
+
+    return 0;
 }

@@ -1,5 +1,5 @@
 output:	main.o
-	g++ main.o -o teste -lGL -lGLU -lglut -lm
+	g++ main.o -o teste -lGL -lGLU -lglut -lm -fopenmp
 
 main.o:	main.cpp
 	g++ main.cpp -c

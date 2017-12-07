@@ -5,6 +5,9 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cmath>
+#include <omp.h>
+
+double start, final;
 
 GLfloat xRotated, yRotated, zRotated;
 float angle=0.0;
@@ -176,7 +179,7 @@ void DrawCube(void){
     for(int i = 0; i < altura; i++){
 		glBegin (GL_POLYGON);
         glBindTexture(GL_TEXTURE_2D, texture[1] );
-		glColor3f(10.0f,40.5f,0.0f);
+		glColor3f(0.33f,0.66f,0.17f);
 
         glTexCoord2f(0.0, 0.0); glVertex3f((P1[i][0].x*scale)-auxOP, (P1[i][0].y*scale)-auxOP, (P1[i][0].z*scale)-auxOP);
         glTexCoord2f(0.0, 1.0); glVertex3f((P1[i][1].x*scale)-auxOP, (P1[i][1].y*scale)-auxOP, (P1[i][1].z*scale)-auxOP);
@@ -189,7 +192,7 @@ void DrawCube(void){
 
 	if((P1[i][0].y == 10)&&(P1[i][1].y == 10)&&(P1[i][2].y == 10)&&(P1[i][3].y == 10)){
 		glBegin (GL_POLYGON);
-		glColor3f(1.8f,0.5f,0.0f);
+		glColor3f(0.33f,1.0f,0.65f);
 		glTexCoord2f(0.0, 0.0); glVertex3f((P1[i][0].x*scale)-auxOP, (P1[i][0].y*scale)-auxOP, (P1[i][0].z*scale)-auxOP);
 		glTexCoord2f(0.0, 1.0); glVertex3f((P1[i][1].x*scale)-auxOP, (P1[i][1].y*scale)-auxOP, (P1[i][1].z*scale)-auxOP);
 		glTexCoord2f(1.0, 0.0); glVertex3f((P1[i][2].x*scale)-auxOP, (P1[i][2].y*scale)-auxOP, (P1[i][2].z*scale)-auxOP);
@@ -197,10 +200,6 @@ void DrawCube(void){
 		glEnd();
 	}
 }
-
-
-
-
 
     glPopMatrix();
     glFlush();
@@ -245,7 +244,12 @@ void processSpecialKeys(int key, int xx, int yy) {
 			y++;
 		break;
 	}
-	if(y == 40) exit(1);
+	if(y == 40){
+		final = omp_get_wtime();
+		cout << "Tempo => " << final - start << " segundos"<<endl;
+		exit(1);
+	} 
+
 	DrawCube();
 }
 
