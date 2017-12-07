@@ -18,8 +18,10 @@ using namespace std;
 
 int main(int argc, char **argv){
 	Labirinto3D* lab = new Labirinto3D(20,20);
-	
+
 	start = omp_get_wtime();
+
+	//texture[1]=LoadTexture2("../../Texturas/TexturaParede.ppm", 512,512);
 
 	glutInit(&argc, argv);
 	//we initizlilze the glut. functions
@@ -32,13 +34,11 @@ int main(int argc, char **argv){
 	glutKeyboardFunc(processNormalKeys);
 	glutSpecialFunc(processSpecialKeys);
 
-	texture[0]=LoadTexture2("../../Texturas/TexturaGrama.ppm", 1024,1024);
-    texture[1]=LoadTexture2("../../Texturas/TexturaParede.ppm", 512,512);
+	//texture[0]=LoadTexture2("../../Texturas/TexturaGrama.ppm", 1024,1024);
+    texture[0]=LoadTexture2("TexturaParede.ppm", 512,512);
 
 	glutReshapeFunc(reshape);
-	//Set the function for the animation.
-	//glutIdleFunc(animation);
 	glutMainLoop();
-	
+
 	return 0;
 }

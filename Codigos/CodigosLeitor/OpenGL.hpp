@@ -6,6 +6,7 @@
 #include <GL/glu.h>
 #include <cmath>
 #include <omp.h>
+#include <fstream>
 
 double start, final;
 
@@ -36,7 +37,7 @@ Ponto **P1;
 int altura;
 int largura;
 
-GLuint texture[2]; //the array for our texture
+GLuint texture[1]; //the array for our texture
 
 GLuint LoadTexture2( const char * filename, int width, int height )
 {
@@ -45,28 +46,26 @@ GLuint LoadTexture2( const char * filename, int width, int height )
 
     GLuint texture;
     unsigned char * data;
-    FILE * file;
+    ifstream iFile(filename);
     char linha2[255];
     int r,g,b;
 
-    file = fopen( filename, "rb" );
-    if ( file == NULL ) return 0;
+    //file = fopen( filename, "rb" );
+    //if ( file == NULL ) return 0;
     data = (unsigned char *)malloc( sizeof(char)*width * height * 3 );
-
-    fgets(linha2,sizeof linha2, file);  // ignora P3
-    fgets(linha2,sizeof linha2, file);  // ignora dimensoes
-    fgets(linha2,sizeof linha2, file);  // ignora colordepth
-
 
     for (int i=0; i<(width*height*3); i+=3)
     {
-        fscanf(file,"%i %i %i",&r,&g,&b);
+        //fscanf(file,"%i %i %i",&r,&g,&b);
+		iFile >> r;
+		iFile >> g;
+		iFile >> b;
+
         data[i]=(unsigned char)r;
         data[i+1]=(unsigned char)g;
         data[i+2]=(unsigned char)b;
+		//cout << i << " " << endl;
     }
-
-    fclose( file );
 
     glGenTextures( 1, &texture ); //gera a textura
     glBindTexture( GL_TEXTURE_2D, texture ); // faz o binding da texture com o array
@@ -83,6 +82,7 @@ GLuint LoadTexture2( const char * filename, int width, int height )
 
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
 
+	//cout << "a";
     free( data );
     return texture;
 }
@@ -160,16 +160,26 @@ void DrawCube(void){
 
 	//gluLookAt(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glBegin(GL_POLYGON);
-	glColor3f(117.0f,50.0f,17.0f);
+	//glColor3f(117.0f,50.0f,17.0f);
 	glTexCoord2f(0.0, 0.0); glVertex3f(-auxOP, -auxOP, -auxOP);
 	glTexCoord2f(0.0, 1.0); glVertex3f(-auxOP, -auxOP, (205*scale)-auxOP);
 	glTexCoord2f(1.0, 0.0); glVertex3f((205*scale)-auxOP, -auxOP, (205*scale)-auxOP);
 	glTexCoord2f(1.0, 1.0); glVertex3f((205*scale)-auxOP, -auxOP, -auxOP);
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
+
+
+
+	//glBindTexture(GL_TEXTURE_2D, texture[0]);
 
 	glBegin(GL_POLYGON);
+
 	glColor3f(255.0f,0.0f,0.0f);
+	//glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glTexCoord2f(0.0, 0.0); glVertex3f((5*x*scale)-auxOP, -auxOP, (5*y*scale)-auxOP);
 	glTexCoord2f(0.0, 1.0); glVertex3f((5*x*scale)-auxOP, -auxOP, (((5*y)+5)*scale)-auxOP);
 	glTexCoord2f(1.0, 0.0); glVertex3f((((5*x)+5)*scale)-auxOP, -auxOP, (((5*y)+5)*scale)-auxOP);
@@ -178,8 +188,7 @@ void DrawCube(void){
 
     for(int i = 0; i < altura; i++){
 		glBegin (GL_POLYGON);
-        glBindTexture(GL_TEXTURE_2D, texture[1] );
-		glColor3f(0.33f,0.66f,0.17f);
+        glColor3f(0.33f,0.66f,0.17f);
 
         glTexCoord2f(0.0, 0.0); glVertex3f((P1[i][0].x*scale)-auxOP, (P1[i][0].y*scale)-auxOP, (P1[i][0].z*scale)-auxOP);
         glTexCoord2f(0.0, 1.0); glVertex3f((P1[i][1].x*scale)-auxOP, (P1[i][1].y*scale)-auxOP, (P1[i][1].z*scale)-auxOP);
@@ -206,17 +215,13 @@ void DrawCube(void){
     glutSwapBuffers();
 }
 
-void animation(void){
-    yRotated += 0.01;
-    xRotated += 0.02;
-    DrawCube();
-}
-
 void reshape(int x, int y){
     if (y == 0 || x == 0) return;  //Nothing is visible then, so return
     //Set a new projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
+
 
     gluPerspective(40.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
     glMatrixMode(GL_MODELVIEW);
@@ -248,8 +253,7 @@ void processSpecialKeys(int key, int xx, int yy) {
 		final = omp_get_wtime();
 		cout << "Tempo => " << final - start << " segundos"<<endl;
 		exit(1);
-	} 
-
+	}
 	DrawCube();
 }
 

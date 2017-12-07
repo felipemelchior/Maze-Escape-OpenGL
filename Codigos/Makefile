@@ -5,4 +5,4 @@ main.o:	main.cpp
 	g++ main.cpp -c
 
 clean:
-	rm *.o teste
+	rm *.o jogo
