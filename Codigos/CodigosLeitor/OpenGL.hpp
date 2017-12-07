@@ -8,11 +8,20 @@
 
 GLfloat xRotated, yRotated, zRotated;
 float angle=0.0;
-float Ox = 7.5f, Oy = 7.5f, Oz = 15.0f;
-float Cx = 7.5f, Cy = 7.5f, Cz = 7.5f;
-float Ux = 7.5f, Uy = 15.0f, Uz = 7.0f;
+/*float Ox = 7.5f, Oy = 7.5f, Oz = 15.0f;
+float Cx = 7.5f, Cy = 4.0f, Cz = 7.5f;
+float Ux = 0.0f, Uy = 0.0f, Uz = 90.0f;*/
+/*
+GLdouble Ox = 7.5f, Oy = 17.5f, Oz = 7.5f;
+GLdouble Cx = 7.5f, Cy = 5.0f, Cz = -15.0f;
+GLdouble Ux = 0.0f, Uy = 90.0f, Uz = 0.0f;
+*/
 
-float scale = 1.0f;
+//GLdouble Ux = 0.0f, Uy = 90.0f, Uz = 0.0f;
+int **caminho;
+
+float scale = 0.01f;
+int x = 1, y = 1;
 struct Ponto{
 	int x;
 	int y;
@@ -87,22 +96,22 @@ void DrawCube(void){
     xRotated = 90.0f;
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-	gluLookAt(	Ox, Oy, Oz,
-				Cx, Cy, Cz,
-				Ux, Uy, Uz);
+	//gluLookAt(	Ox, Oy, Oz,
+		//		Cx, Cy, Cz,
+			//	Ux, Uy, Uz);
     glPushMatrix();
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //glTranslatef(0.0,0.0,-10.5);
-    //glRotatef(xRotated,1.0,0.0,0.0);
-    //glRotatef(yRotated,0.0,1.0,0.0);
+    glTranslatef(0.0,0.0,-10.5);
+    glRotatef(xRotated,1.0,0.0,0.0);
+    glRotatef(yRotated,0.0,1.0,0.0);
     //glRotatef(zRotated,0.0,0.0,1.0);
 
 	//gluLookAt(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	glBegin(GL_POLYGON);
-	glColor3f(1.0f,0.0f,1.0f);
+	glColor3f(117.0f,50.0f,17.0f);
 	glTexCoord2f(0.0, 0.0); glVertex3f(0*scale, 0*scale, 0*scale);
 	glTexCoord2f(0.0, 1.0); glVertex3f(0*scale, 0*scale, 205*scale);
 	glTexCoord2f(1.0, 0.0); glVertex3f(205*scale, 0*scale, 205*scale);
@@ -119,6 +128,14 @@ void DrawCube(void){
         glTexCoord2f(1.0, 1.0); glVertex3f(P1[i][3].x*scale, P1[i][3].y*scale, P1[i][3].z*scale);
         glEnd();
     }
+
+	glBegin(GL_POLYGON);
+	glColor3f(255.0f,0.0f,0.0f);
+	glTexCoord2f(0.0, 0.0); glVertex3f(5*x*scale, 0, 5*y*scale);
+	glTexCoord2f(0.0, 1.0); glVertex3f(5*x*scale, 0, ((5*y)+5)*scale);
+	glTexCoord2f(1.0, 0.0); glVertex3f(((5*x)+5)*scale, 0, ((5*y)+5)*scale);
+	glTexCoord2f(1.0, 1.0); glVertex3f(((5*x)+5)*scale, 0, 5*y*scale);
+	glEnd();
 
     glPopMatrix();
     glFlush();
@@ -143,20 +160,24 @@ void reshape(int x, int y){
 }
 
 void processSpecialKeys(int key, int xx, int yy) {
-	float fraction = 0.1f;
+	float ponto = 0.0;
 
 	switch (key) {
-		case GLUT_KEY_LEFT :
-			Cy += 0.1;
+		case GLUT_KEY_LEFT:
+			if(caminho[x-1][y] == 1)
+			x--;
 		break;
-		case GLUT_KEY_RIGHT :
-			Cy -= 0.1;
+		case GLUT_KEY_RIGHT:
+			if(caminho[x+1][y] == 1)
+			x++;
 		break;
-		case GLUT_KEY_UP :
-
+		case GLUT_KEY_UP:
+			if(caminho[x][y-1] == 1)
+			y--;
 		break;
-		case GLUT_KEY_DOWN :
-
+		case GLUT_KEY_DOWN:
+			if(caminho[x][y+1] == 1)
+			y++;
 		break;
 	}
 	DrawCube();

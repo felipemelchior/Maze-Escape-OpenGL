@@ -18,6 +18,7 @@ public:
     void SetLargura(int largura);
     void ExibeMatriz();
     void Conversor3D();
+    void Trajetoria();
     void Status();
     void DefinePontos();
 private:
@@ -319,7 +320,7 @@ void Labirinto3D::Conversor3D(){
     }
 
     leitor->readObj(VerticesLab, FacesLab, cont, Pontos);
-
+    Trajetoria();
     for(int i = 0; i < this->Pontos; i++){
         oFile << "v " <<  VerticesLab[i].x << " " << VerticesLab[i].y << " " << VerticesLab[i].z << endl;
     }
@@ -333,4 +334,18 @@ void Labirinto3D::Conversor3D(){
 
     oFile.close();
 }
+
+void Labirinto3D::Trajetoria(){
+    caminho = (int**)malloc(this->Altura*sizeof(int*));
+    for(int i = 0; i < this->Altura; i++){
+        caminho[i] = (int*)malloc(this->Largura*sizeof(int));
+    }
+
+    for(int i = 0; i < this->Altura; i++){
+        for(int j = 0; j < this->Largura; j++){
+            caminho[i][j] = this->Matriz[i][j];
+        }
+    }
+}
+
 #endif
