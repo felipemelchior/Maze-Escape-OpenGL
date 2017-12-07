@@ -104,9 +104,18 @@ void DrawCube(void){
 
 	//gluLookAt(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
+	glBegin(GL_POLYGON);
+	glColor3f(1.0f,0.0f,1.0f);
+	glTexCoord2f(0.0, 0.0); glVertex3f(0*scale, 0*scale, 0*scale);
+	glTexCoord2f(0.0, 1.0); glVertex3f(0*scale, 0*scale, 205*scale);
+	glTexCoord2f(1.0, 0.0); glVertex3f(205*scale, 0*scale, 205*scale);
+	glTexCoord2f(1.0, 1.0); glVertex3f(205*scale, 0*scale, 0*scale);
+	glEnd();
+
     for(int i = 0; i < altura; i++){
         glBindTexture(GL_TEXTURE_2D, texture[1] );
         glBegin (GL_POLYGON);
+		glColor3f(1.0f,0.5f,0.0f);
         glTexCoord2f(0.0, 0.0); glVertex3f(P1[i][0].x*scale, P1[i][0].y*scale, P1[i][0].z*scale);
         glTexCoord2f(0.0, 1.0); glVertex3f(P1[i][1].x*scale, P1[i][1].y*scale, P1[i][1].z*scale);
         glTexCoord2f(1.0, 0.0); glVertex3f(P1[i][2].x*scale, P1[i][2].y*scale, P1[i][2].z*scale);
