@@ -22,11 +22,13 @@ int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	//we initizlilze the glut. functions
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-	glutInitWindowSize(1366,768);
+	glutInitWindowSize(800,600);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow(argv[0]);
 	init();
 	glutDisplayFunc(DrawCube);
+	glutKeyboardFunc(processNormalKeys);
+	glutSpecialFunc(processSpecialKeys);
 
 	texture[0]=LoadTexture2("../../Texturas/TexturaGrama.ppm", 1024,1024);
     texture[1]=LoadTexture2("../../Texturas/TexturaParede.ppm", 512,512);

@@ -4,9 +4,18 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <cmath>
 
 GLfloat xRotated, yRotated, zRotated;
+float angle=0.0;
+float Ox = 0.0f, Oy = 1.0f, Oz = 5.0f;
+float Cx = 0.0f, Cy = 1.0f, Cz = 5.0f;
+float Ux = 0.0f, Uy = 1.0f, Uz = 0.0f;
 
+float lx=0.0f,lz=-1.0f;
+float x=0.0f,z=5.0f;
+
+float scale = 0.01f;
 struct Ponto{
 	int x;
 	int y;
@@ -77,10 +86,13 @@ void init(void){
 
 }
 
-void DrawCube(void){    
+void DrawCube(void){
     xRotated = 90.0f;
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+	gluLookAt(	Ox, Oy, Oz,
+				Cx+lx, Cy, Cz+lz,
+				Ux, Uy, Uz);
     glPushMatrix();
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -90,13 +102,15 @@ void DrawCube(void){
     glRotatef(yRotated,0.0,1.0,0.0);
     glRotatef(zRotated,0.0,0.0,1.0);
 
+	//gluLookAt(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
     for(int i = 0; i < altura; i++){
-        glBindTexture(GL_TEXTURE_2D, texture[1] );       
+        glBindTexture(GL_TEXTURE_2D, texture[1] );
         glBegin (GL_POLYGON);
-        glTexCoord2f(0.0, 0.0); glVertex3f(P1[i][0].x*0.01f, P1[i][0].y*0.01f, P1[i][0].z*0.01f);
-        glTexCoord2f(0.0, 1.0); glVertex3f(P1[i][1].x*0.01f, P1[i][1].y*0.01f, P1[i][1].z*0.01f);
-        glTexCoord2f(1.0, 0.0); glVertex3f(P1[i][2].x*0.01f, P1[i][2].y*0.01f, P1[i][2].z*0.01f);
-        glTexCoord2f(1.0, 1.0); glVertex3f(P1[i][3].x*0.01f, P1[i][3].y*0.01f, P1[i][3].z*0.01f);
+        glTexCoord2f(0.0, 0.0); glVertex3f(P1[i][0].x*scale, P1[i][0].y*scale, P1[i][0].z*scale);
+        glTexCoord2f(0.0, 1.0); glVertex3f(P1[i][1].x*scale, P1[i][1].y*scale, P1[i][1].z*scale);
+        glTexCoord2f(1.0, 0.0); glVertex3f(P1[i][2].x*scale, P1[i][2].y*scale, P1[i][2].z*scale);
+        glTexCoord2f(1.0, 1.0); glVertex3f(P1[i][3].x*scale, P1[i][3].y*scale, P1[i][3].z*scale);
         glEnd();
     }
 
@@ -120,6 +134,34 @@ void reshape(int x, int y){
     gluPerspective(40.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
     glMatrixMode(GL_MODELVIEW);
     glViewport(0,0,x,y);  //Use the whole window for rendering
+}
+
+void processSpecialKeys(int key, int xx, int yy) {
+	float fraction = 0.1f;
+
+	switch (key) {
+		case GLUT_KEY_LEFT :
+			Oz += 0.1;
+		break;
+		case GLUT_KEY_RIGHT :
+			Oz -= 0.1;
+		break;
+		case GLUT_KEY_UP :
+
+		break;
+		case GLUT_KEY_DOWN :
+
+		break;
+	}
+	DrawCube();
+}
+
+void processNormalKeys(unsigned char key, int x, int y){
+	switch (key) {
+		case 27:
+			exit(0);
+		break;
+	}
 }
 
 void ImprimeP1(){
