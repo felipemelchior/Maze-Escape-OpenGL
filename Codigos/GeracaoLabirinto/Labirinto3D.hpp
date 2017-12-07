@@ -250,11 +250,22 @@ void Labirinto3D::Conversor3D(){
                 << endl;
                 */
 
-                FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
-                FacesLab[cont][1] = (i*(this->Largura+1))+j+2;
-                FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
-                FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
-                cont++;
+                if(i > 0){
+                    if(Matriz[i-1][j] != 0){
+                        FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                        FacesLab[cont][1] = (i*(this->Largura+1))+j+2;
+                        FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                        FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                        cont++;
+                    }
+                }
+                else{
+                    FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                    FacesLab[cont][1] = (i*(this->Largura+1))+j+2;
+                    FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                    FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                    cont++;
+                }
 
                 /*
                 oFile << "f "
@@ -265,11 +276,22 @@ void Labirinto3D::Conversor3D(){
                 << endl;
                 */
 
-                FacesLab[cont][0] = (i*(this->Largura+1))+j+2;
-                FacesLab[cont][1] = (i*(this->Largura+1))+j+2+(this->Largura+1);
-                FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
-                FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
-                cont++;
+                if(j < 40){
+                    if(Matriz[i][j+1] != 0){
+                        FacesLab[cont][0] = (i*(this->Largura+1))+j+2;
+                        FacesLab[cont][1] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                        FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                        FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                        cont++;
+                    }
+                }
+                else{
+                    FacesLab[cont][0] = (i*(this->Largura+1))+j+2;
+                    FacesLab[cont][1] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                    FacesLab[cont][2] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                    FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Pontos/2);
+                    cont++;
+                }
 
                 /*
                 oFile << "f "
@@ -280,11 +302,22 @@ void Labirinto3D::Conversor3D(){
                 << endl;
                 */
 
-                FacesLab[cont][0] = (i*(this->Largura+1))+j+2+(this->Largura+1);
-                FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
-                FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
-                FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
-                cont++;
+                if(i < 40){
+                    if(Matriz[i+1][j] != 0){
+                        FacesLab[cont][0] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                        FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                        FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                        FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                        cont++;
+                    }
+                }
+                else{
+                    FacesLab[cont][0] = (i*(this->Largura+1))+j+2+(this->Largura+1);
+                    FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                    FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                    FacesLab[cont][3] = (i*(this->Largura+1))+j+2+(this->Largura+1)+(this->Pontos/2);
+                    cont++;
+                }
 
                 /*
                 oFile << "f "
@@ -295,11 +328,22 @@ void Labirinto3D::Conversor3D(){
                 << endl;
                 */
 
-                FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
-                FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
-                FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
-                FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
-                cont++;
+                if(j > 0){
+                    if(Matriz[i][j-1] != 0){
+                        FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                        FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                        FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                        FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                        cont++;
+                    }
+                }
+                else{
+                    FacesLab[cont][0] = (i*(this->Largura+1))+j+1;
+                    FacesLab[cont][1] = (i*(this->Largura+1))+j+1+(this->Largura+1);
+                    FacesLab[cont][2] = (i*(this->Largura+1))+j+1+(this->Largura+1)+(this->Pontos/2);
+                    FacesLab[cont][3] = (i*(this->Largura+1))+j+1+(this->Pontos/2);
+                    cont++;
+                }
 
                 /*
                 oFile << "f "
