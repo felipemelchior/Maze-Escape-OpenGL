@@ -20,14 +20,15 @@ GLdouble Ux = 0.0f, Uy = 90.0f, Uz = 0.0f;
 //GLdouble Ux = 0.0f, Uy = 90.0f, Uz = 0.0f;
 int **caminho;
 
-float scale = 0.01f;
+float scale = 0.05f;
 int x = 1, y = 1;
+float auxOP = 6.0f;
 struct Ponto{
 	int x;
 	int y;
 	int z;
 };
-
+int rotX, rotY, obsZ;
 Ponto **P1;
 int altura;
 int largura;
@@ -84,16 +85,60 @@ GLuint LoadTexture2( const char * filename, int width, int height )
 }
 
 void init(void){
-	//glClearColor(0,0,0,0);
-    glEnable(GL_LIGHT2);
-    //glEnable(GL_DEPTH_TEST);
-    glEnable (GL_TEXTURE_2D );
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	// Define a cor de fundo da janela de visualização como branca
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+	// Habilita a definição da cor do material a partir da cor corrente
+	glEnable(GL_COLOR_MATERIAL);
+	//Habilita o uso de iluminação
+	glEnable(GL_LIGHTING);
+	// Habilita a luz de número 2
+	glEnable(GL_LIGHT2);
+	// Habilita o depth-buffering
+	glEnable(GL_DEPTH_TEST);
+
+	// Habilita o modelo de colorização de Gouraud
+	glShadeModel(GL_SMOOTH);
+
+	// Inicializa a variável que especifica o ângulo da projeção
+	// perspectiva
+	angle=50;
+
+	// Inicializa as variáveis usadas para alterar a posição do
+	// observador virtual
+	rotX = 30;
+	rotY = 0;
+	obsZ = 180;
+}
+
+void DefineIluminacao (void)
+{
+        GLfloat luzAmbiente[4]={0.2,0.2,0.2,1.0};
+        GLfloat luzDifusa[4]={0.7,0.7,0.7,1.0};          // "cor"
+        GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho"
+        GLfloat posicaoLuz[4]={0.0, 50.0, 50.0, 1.0};
+
+        // Capacidade de brilho do material
+        GLfloat especularidade[4]={1.0,1.0,1.0,1.0};
+        GLint especMaterial = 60;
+
+        // Define a refletância do material
+        glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade);
+        // Define a concentração do brilho
+        glMateriali(GL_FRONT,GL_SHININESS,especMaterial);
+
+        // Ativa o uso da luz ambiente
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
+
+        // Define os parâmetros da luz de número 0
+        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa );
+        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular );
+        glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz );
 }
 
 void DrawCube(void){
-    xRotated = 90.0f;
+    xRotated = 80.0f;
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 	//gluLookAt(	Ox, Oy, Oz,
@@ -101,7 +146,9 @@ void DrawCube(void){
 			//	Ux, Uy, Uz);
     glPushMatrix();
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	DefineIluminacao();
 
     glTranslatef(0.0,0.0,-10.5);
     glRotatef(xRotated,1.0,0.0,0.0);
@@ -112,30 +159,32 @@ void DrawCube(void){
 
 	glBegin(GL_POLYGON);
 	glColor3f(117.0f,50.0f,17.0f);
-	glTexCoord2f(0.0, 0.0); glVertex3f(0*scale, 0*scale, 0*scale);
-	glTexCoord2f(0.0, 1.0); glVertex3f(0*scale, 0*scale, 205*scale);
-	glTexCoord2f(1.0, 0.0); glVertex3f(205*scale, 0*scale, 205*scale);
-	glTexCoord2f(1.0, 1.0); glVertex3f(205*scale, 0*scale, 0*scale);
+	glTexCoord2f(0.0, 0.0); glVertex3f(-auxOP, -auxOP, -auxOP);
+	glTexCoord2f(0.0, 1.0); glVertex3f(-auxOP, -auxOP, (205*scale)-auxOP);
+	glTexCoord2f(1.0, 0.0); glVertex3f((205*scale)-auxOP, -auxOP, (205*scale)-auxOP);
+	glTexCoord2f(1.0, 1.0); glVertex3f((205*scale)-auxOP, -auxOP, -auxOP);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(255.0f,0.0f,0.0f);
+	glTexCoord2f(0.0, 0.0); glVertex3f((5*x*scale)-auxOP, -auxOP, (5*y*scale)-auxOP);
+	glTexCoord2f(0.0, 1.0); glVertex3f((5*x*scale)-auxOP, -auxOP, (((5*y)+5)*scale)-auxOP);
+	glTexCoord2f(1.0, 0.0); glVertex3f((((5*x)+5)*scale)-auxOP, -auxOP, (((5*y)+5)*scale)-auxOP);
+	glTexCoord2f(1.0, 1.0); glVertex3f((((5*x)+5)*scale)-auxOP, -auxOP, (5*y*scale)-auxOP);
 	glEnd();
 
     for(int i = 0; i < altura; i++){
         glBindTexture(GL_TEXTURE_2D, texture[1] );
         glBegin (GL_POLYGON);
 		glColor3f(1.0f,0.5f,0.0f);
-        glTexCoord2f(0.0, 0.0); glVertex3f(P1[i][0].x*scale, P1[i][0].y*scale, P1[i][0].z*scale);
-        glTexCoord2f(0.0, 1.0); glVertex3f(P1[i][1].x*scale, P1[i][1].y*scale, P1[i][1].z*scale);
-        glTexCoord2f(1.0, 0.0); glVertex3f(P1[i][2].x*scale, P1[i][2].y*scale, P1[i][2].z*scale);
-        glTexCoord2f(1.0, 1.0); glVertex3f(P1[i][3].x*scale, P1[i][3].y*scale, P1[i][3].z*scale);
+        glTexCoord2f(0.0, 0.0); glVertex3f((P1[i][0].x*scale)-auxOP, (P1[i][0].y*scale)-auxOP, (P1[i][0].z*scale)-auxOP);
+        glTexCoord2f(0.0, 1.0); glVertex3f((P1[i][1].x*scale)-auxOP, (P1[i][1].y*scale)-auxOP, (P1[i][1].z*scale)-auxOP);
+        glTexCoord2f(1.0, 0.0); glVertex3f((P1[i][2].x*scale)-auxOP, (P1[i][2].y*scale)-auxOP, (P1[i][2].z*scale)-auxOP);
+        glTexCoord2f(1.0, 1.0); glVertex3f((P1[i][3].x*scale)-auxOP, (P1[i][3].y*scale)-auxOP, (P1[i][3].z*scale)-auxOP);
         glEnd();
     }
 
-	glBegin(GL_POLYGON);
-	glColor3f(255.0f,0.0f,0.0f);
-	glTexCoord2f(0.0, 0.0); glVertex3f(5*x*scale, 0, 5*y*scale);
-	glTexCoord2f(0.0, 1.0); glVertex3f(5*x*scale, 0, ((5*y)+5)*scale);
-	glTexCoord2f(1.0, 0.0); glVertex3f(((5*x)+5)*scale, 0, ((5*y)+5)*scale);
-	glTexCoord2f(1.0, 1.0); glVertex3f(((5*x)+5)*scale, 0, 5*y*scale);
-	glEnd();
+
 
     glPopMatrix();
     glFlush();
