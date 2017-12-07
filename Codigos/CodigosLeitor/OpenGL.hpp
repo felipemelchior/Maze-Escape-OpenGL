@@ -8,14 +8,11 @@
 
 GLfloat xRotated, yRotated, zRotated;
 float angle=0.0;
-float Ox = 0.0f, Oy = 1.0f, Oz = 5.0f;
-float Cx = 0.0f, Cy = 1.0f, Cz = 5.0f;
-float Ux = 0.0f, Uy = 1.0f, Uz = 0.0f;
+float Ox = 7.5f, Oy = 7.5f, Oz = 15.0f;
+float Cx = 7.5f, Cy = 7.5f, Cz = 7.5f;
+float Ux = 7.5f, Uy = 15.0f, Uz = 7.0f;
 
-float lx=0.0f,lz=-1.0f;
-float x=0.0f,z=5.0f;
-
-float scale = 0.01f;
+float scale = 1.0f;
 struct Ponto{
 	int x;
 	int y;
@@ -91,16 +88,16 @@ void DrawCube(void){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 	gluLookAt(	Ox, Oy, Oz,
-				Cx+lx, Cy, Cz+lz,
+				Cx, Cy, Cz,
 				Ux, Uy, Uz);
     glPushMatrix();
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glTranslatef(0.0,0.0,-10.5);
-    glRotatef(xRotated,1.0,0.0,0.0);
-    glRotatef(yRotated,0.0,1.0,0.0);
-    glRotatef(zRotated,0.0,0.0,1.0);
+    //glTranslatef(0.0,0.0,-10.5);
+    //glRotatef(xRotated,1.0,0.0,0.0);
+    //glRotatef(yRotated,0.0,1.0,0.0);
+    //glRotatef(zRotated,0.0,0.0,1.0);
 
 	//gluLookAt(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
@@ -150,10 +147,10 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 	switch (key) {
 		case GLUT_KEY_LEFT :
-			Oz += 0.1;
+			Cy += 0.1;
 		break;
 		case GLUT_KEY_RIGHT :
-			Oz -= 0.1;
+			Cy -= 0.1;
 		break;
 		case GLUT_KEY_UP :
 
