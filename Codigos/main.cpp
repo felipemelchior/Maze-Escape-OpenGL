@@ -27,9 +27,13 @@ int main(int argc, char **argv){
 	glutCreateWindow(argv[0]);
 	init();
 	glutDisplayFunc(DrawCube);
+
+	texture[0]=LoadTexture2("../../Texturas/TexturaGrama.ppm", 1024,1024);
+    texture[1]=LoadTexture2("../../Texturas/TexturaParede.ppm", 512,512);
+
 	glutReshapeFunc(reshape);
 	//Set the function for the animation.
-	glutIdleFunc(animation);
+	//glutIdleFunc(animation);
 	glutMainLoop();
 
 	return 0;
